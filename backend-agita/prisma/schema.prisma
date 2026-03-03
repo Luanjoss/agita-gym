@@ -1,0 +1,18 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model Evento {
+  id          Int      @id @default(autoincrement())
+  titulo      String
+  descricao   String?  @db.Text
+  dataEvento  DateTime
+  imagemUrl   String?
+  criadoEm    DateTime @default(now())
+  atualizadoEm DateTime @updatedAt
+}
