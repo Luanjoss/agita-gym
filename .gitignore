@@ -1,4 +1,9 @@
-.docker/
-.env
+# Ignorar arquivos de dados do Docker/MySQL
+.docker/mysql/
+*.sock
+*.lock
+
+# Ignorar dependências e arquivos de ambiente
 node_modules/
-/generated/prisma
+.env
+dist/
