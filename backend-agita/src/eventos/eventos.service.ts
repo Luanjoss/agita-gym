@@ -1,13 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
+import { Prisma } from '@prisma/client'; // Importamos os tipos do Prisma
 
 @Injectable()
 export class EventosService {
   // Injetamos o PrismaService para usar o banco de dados
   constructor(private prisma: PrismaService) {}
 
-  // Criar um novo evento
-  async criar(dados: any) {
+  // Em vez de 'any', usaremos o tipo de criação gerado pelo Prisma
+  async criar(dados: Prisma.EventoCreateInput) {
     return this.prisma.evento.create({
       data: dados,
     });
