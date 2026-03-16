@@ -24,4 +24,18 @@ export class EventosService {
       where: { id: Number(id) },
     });
   }
-}
+
+  async buscarPorId(id: number) {
+    return this.prisma.evento.findUnique({
+      where: { id },
+    });
+  }
+
+  async atualizar(id: number, dados: any) {
+    return this.prisma.evento.update({
+      where: { id },
+      data: dados,
+    });
+  }
+
+} 

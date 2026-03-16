@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Delete, Body, Param, Patch } from '@nestjs/common';
 import { EventosService } from './eventos.service';
 import { CreateEventoDto } from './dto/create-evento.dto';
 
@@ -20,4 +20,15 @@ export class EventosController {
   removerEvento(@Param('id') id: string) {
     return this.eventosService.remover(+id);
   }
+  
+  @Get(':id')
+  buscarUm(@Param('id') id: string) {
+    return this.eventosService.buscarPorId(+id);
+  }
+
+  @Patch(':id') // PATCH é usado para atualizações parciais
+  atualizar(@Param('id') id: string, @Body() dados: any) {
+    return this.eventosService.atualizar(+id, dados);
+  }
+
 }
