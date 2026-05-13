@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { Prisma } from '@prisma/client'; // Importamos os tipos do Prisma
 
@@ -21,22 +22,31 @@ export class EventosService {
 
   // Deletar um evento pelo ID
   async remover(id: number) {
+    await this.buscarPorId(id);
+
     return this.prisma.evento.delete({
       where: { id: Number(id) },
     });
   }
 
   async buscarPorId(id: number) {
-    return this.prisma.evento.findUnique({
-      where: { id },
+    const evento = await this.prisma.evento.findUnique({
+      where: { id: Number(id) },
     });
+
+    if (!evento) {
+      throw new NotFoundException(`Evento com ID #${id} não encontrado.`);
+    }
+
+    return evento;
   }
 
   async atualizar(id: number, dados: any) {
+    await this.buscarPorId(id);
+
     return this.prisma.evento.update({
       where: { id },
       data: dados,
     });
   }
-
-} 
+}
